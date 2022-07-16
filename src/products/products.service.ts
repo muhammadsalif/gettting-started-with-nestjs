@@ -13,4 +13,8 @@ export class ProductsService {
     return this.count;
   }
 
+  getAllProducts() {
+    return [...this.products];
+  }
+
 }
