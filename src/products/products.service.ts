@@ -7,11 +7,11 @@ export class ProductsService {
   products: Product[] = [];
   count = 0;
 
-  insertProduct(title: string, description: string, price: number): number {
+  insertProduct(title: string, description: string, price: number) {
     this.count += 1;
     const newProduct = new Product(this.count, title, description, price);
     this.products.push(newProduct);
-    return this.count;
+    return newProduct;
   }
 
   getAllProducts() {
@@ -24,6 +24,16 @@ export class ProductsService {
       throw new BadRequestException('Not found')
     }
     return { ...product };
+  }
+
+  updateProduct(id: number, price: number, description: string, title: string) {
+    const product = this.products.find((eachProduct) => eachProduct.id == id);
+    const index = this.products.findIndex((eachProduct) => eachProduct.id == id);
+    if (!product) {
+      throw new BadRequestException('Not found')
+    }
+    this.products[index] = { ...product, price: price ?? product.price, description: description ?? product.description, title: title ?? product.title };
+    return this.products[index];
   }
 
 }
