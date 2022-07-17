@@ -36,4 +36,14 @@ export class ProductsService {
     return this.products[index];
   }
 
+  deleteProduct(id: number) {
+    const product = this.products.find((eachProduct) => eachProduct.id == id);
+    if (!product) {
+      throw new BadRequestException('Not found')
+    }
+    const filteredProduct = this.products.filter((eachProduct) => eachProduct.id != id);
+    this.products = filteredProduct;
+    return this.products;
+  }
+
 }
